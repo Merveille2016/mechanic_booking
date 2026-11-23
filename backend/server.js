@@ -6,10 +6,17 @@ const bcrypt = require('bcryptjs');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+
+// CORS: FRONTEND_URL can hold one or more comma-separated origins
+// (e.g. https://my-app.vercel.app). If it is not set, every origin is allowed.
+const allowedOrigins = (process.env.FRONTEND_URL || '')
+  .split(',')
+  .map((o) => o.trim().replace(/\/$/, ''))
+  .filter(Boolean);
+app.use(cors(allowedOrigins.length ? { origin: allowedOrigins } : {}));
 app.use(express.json()); // Allows reading JSON data from React
 
-// Connect to Neon PostgreSQL (SRS Section 6.6)
+// Connect to Prisma Postgres (SRS Section 6.6)
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
@@ -18,9 +25,15 @@ const pool = new Pool({
 // TEST CONNECTION
 pool.connect((err, client, release) => {
   if (err) return console.error('DB Connection Error:', err.stack);
-  console.log('✅ Connected to Neon PostgreSQL!');
+  console.log('✅ Connected to PostgreSQL!');
   release();
 });
+
+// Never send the password hash back to the browser
+const publicUser = ({ password_hash, ...user }) => user;
+
+// Health check (Render uses this to know the service is up)
+app.get('/', (req, res) => res.json({ status: 'ok' }));
 
 // ==========================================
 // 1. REGISTER ROUTE (SRS Section 7.1 & NFR-03)
@@ -34,7 +47,7 @@ app.post('/api/register', async (req, res) => {
       'INSERT INTO customers (full_name, email, phone, password_hash) VALUES ($1, $2, $3, $4) RETURNING *',
       [full_name, email, phone, hashedPassword]
     );
-    res.status(201).json({ message: 'Registration successful!', user: result.rows[0] });
+    res.status(201).json({ message: 'Registration successful!', user: publicUser(result.rows[0]) });
   } catch (err) {
     if (err.code === '23505') return res.status(400).json({ message: 'Email already exists.' });
     res.status(500).json({ message: 'Server error during registration.' });
@@ -54,10 +67,15 @@ app.post('/api/login', async (req, res) => {
     const validPass = await bcrypt.compare(password, user.rows[0].password_hash);
     if (!validPass) return res.status(401).json({ message: 'Invalid credentials' });
     
-    res.json({ message: 'Login successful!', user: user.rows[0] });
+    res.json({ message: 'Login successful!', user: publicUser(user.rows[0]) });
   } catch (err) {
     res.status(500).json({ message: 'Server error during login.' });
   }
+});
+
+// LOGOUT (sessions are kept in the browser, so nothing to clear server-side)
+app.post('/api/logout', (req, res) => {
+  res.json({ message: 'Logged out.' });
 });
 
 // ==========================================

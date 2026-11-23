@@ -1,4 +1,5 @@
-const API_BASE = 'http://localhost:5000/api';
+// On Vercel set VITE_API_URL to your Render backend URL, e.g. https://mechanic-backend.onrender.com
+const API_BASE = `${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '')}/api`;
 
 export const registerUser = async (data) => {
   const response = await fetch(`${API_BASE}/register`, {
