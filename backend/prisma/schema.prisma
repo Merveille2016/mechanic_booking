@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model bookings {
+  booking_id          Int        @id @default(autoincrement())
+  customer_id         Int?
+  problem_description String
+  location            String     @db.VarChar(100)
+  status              String?    @default("PENDING") @db.VarChar(20)
+  created_at          DateTime?  @default(now()) @db.Timestamp(6)
+  customers           customers? @relation(fields: [customer_id], references: [customer_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model customers {
+  customer_id   Int        @id @default(autoincrement())
+  full_name     String     @db.VarChar(100)
+  email         String     @unique @db.VarChar(100)
+  phone         String     @db.VarChar(20)
+  password_hash String     @db.VarChar(255)
+  created_at    DateTime?  @default(now()) @db.Timestamp(6)
+  bookings      bookings[]
+  vehicles      vehicles[]
+}
+
+model vehicles {
+  vehicle_id   Int        @id @default(autoincrement())
+  customer_id  Int?
+  make         String     @db.VarChar(50)
+  model        String     @db.VarChar(50)
+  plate_number String     @unique @db.VarChar(20)
+  year         Int        @db.SmallInt
+  customers    customers? @relation(fields: [customer_id], references: [customer_id], onDelete: Cascade, onUpdate: NoAction)
+}

@@ -1,0 +1,206 @@
+/* Global Reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.body { font-family: 'Arial', sans-serif; background-color: #f8f9fa; min-height: 100vh; }
+
+/* Header */
+.header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: white; border-bottom: 1px solid #ddd; }
+.logo { font-size: 20px; color: #333; }
+.nav { display: flex; gap: 20px; }
+.nav a { text-decoration: none; color: #333; font-weight: 500; }
+
+/* Layout */
+.container { display: flex; justify-content: center; align-items: center; padding: 50px 20px; }
+.card { display: flex; background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 900px; overflow: hidden; }
+.formSide { flex: 1; padding: 40px; }
+.infoSide { flex: 1; padding: 40px; background: #fcfcfc; border-left: 1px solid #eee; }
+
+/* Typography */
+.subtitle { color: #666; font-size: 14px; margin-bottom: 20px; }
+.smallText { font-size: 12px; color: #888; margin-top: 20px; font-style: italic; }
+.hint { font-size: 12px; color: #888; margin-top: 5px; }
+
+/* Form Elements */
+.inputGroup { margin-bottom: 15px; text-align: left; }
+.inputGroup label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; color: #333; }
+.inputGroup input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+.row { display: flex; }
+.flex-1 { flex: 1; }
+.mr-2 { margin-right: 10px; }
+
+/* Buttons & Links */
+button { width: 100%; padding: 12px; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+button:disabled { opacity: 0.7; cursor: not-allowed; }
+.forgotLink { text-align: right; margin-bottom: 15px; }
+.switchText { margin-top: 20px; font-size: 14px; text-align: left; }
+.link { color: #0066cc; cursor: pointer; font-weight: bold; text-decoration: underline; }
+
+/* Messages */
+.message { padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 14px; }
+.message.success { background: #e6f7ff; border: 1px solid #91d5ff; color: #0050b3; }
+.message.error { background: #fff1f0; border: 1px solid #ffa39e; color: #cf1322; }
+
+/* Info Side List */
+.list { padding-left: 20px; line-height: 1.8; color: #555; }
+/* Add these to your existing App.css */
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: #333;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.nav-btn.active, .nav-btn:hover {
+  background: #0066cc;
+  color: white;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: #0066cc;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+}
+.toggle-btn:hover {
+  color: #004c99;
+}
+/* Add to App.css */
+
+.user-greeting {
+  color: #333;
+  font-weight: 500;
+  margin-right: 15px;
+}
+
+.logout-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.logout-btn:hover {
+  background: #b91c1c;
+}
+
+.dashboard-message {
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.dashboard-message h2 {
+  color: #1a56db;
+  margin-bottom: 20px;
+}
+
+.security-note {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 15px;
+  border-radius: 4px;
+  margin-top: 20px;
+  font-weight: 500;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.remember-me input[type="checkbox"] {
+  cursor: pointer;
+}
+
+/* SECURITY: Prevent autocomplete visual styling */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-text-fill-color: #333 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+/* Dashboard Styles */
+.dashboard-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 800px;
+  padding: 30px;
+}
+
+.dashboard-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+}
+
+.tab-btn.active {
+  color: #1a56db;
+  border-bottom-color: #1a56db;
+}
+
+/* Booking List Styles */
+.bookings-list h3 { margin-bottom: 20px; color: #333; }
+.booking-item {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+.booking-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.booking-id { font-weight: bold; color: #333; }
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.status-pending { background: #fef3c7; color: #92400e; }
+.status-accepted { background: #d1fae5; color: #065f46; }
+.empty-state { text-align: center; color: #888; padding: 20px; }
